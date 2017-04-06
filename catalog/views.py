@@ -61,6 +61,11 @@ def my_view(request):
 
 ---
 
+https://realpython.com/blog/python/primer-on-python-decorators/
+Python allows you to simplify the calling of decorators using the @ symbol (this is called “pie” syntax).
+
+--- 
+
 
 Similarly, the easiest way to restrict access to logged-in users in your class-based views is to derive from LoginRequiredMixin. You need to declare this mixin first in the super class list, before the main view class.
 
@@ -75,5 +80,5 @@ class MyView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
 
-    
+
 """
