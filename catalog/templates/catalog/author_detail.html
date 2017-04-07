@@ -3,5 +3,8 @@
 {% block content %}
   <h1>Name: {{ author.first_name }} {{ author.last_name }}</h1>
 
+  <a href="{% url 'author_update' author.id %}">Update Author</a> 
+  <a href="{% url 'author_delete' author.id %}">Delete Author</a> 
+
 
 {% endblock %}

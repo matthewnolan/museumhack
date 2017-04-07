@@ -7,9 +7,12 @@
     <!-- the_model_name_list -->
     <ul>
 
-      {% for bookinstance in bookinstance_list %}
+      {% for bookinst in bookinstance_list %}
       <li>
-        <a href="{{ bookinstance.get_absolute_url }}">{{ bookinstance.book }}</a> <span class="{% if bookinstance.is_overdue %}text-danger{% endif %}">({{bookinstance.due_back}}) - {{bookinstance.borrower}}</span>
+        <a href="{{ bookinst.get_absolute_url }}">{{ bookinst.book }}</a> <span class="{% if bookinst.is_overdue %}text-danger{% endif %}">({{bookinst.due_back}}) - {{bookinst.borrower}}</span> 
+
+        {% if perms.catalog.can_mark_returned %}- <a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>  {% endif %}
+
       </li>
       {% endfor %}
 
