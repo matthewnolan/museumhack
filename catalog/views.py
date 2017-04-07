@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance, Genre, Institution, Person
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
@@ -33,6 +33,24 @@ def index(request):
          context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors,
             'num_visits':num_visits}, # num_visits appended
     )
+
+
+class InstitutionListView(generic.ListView):
+    model = Institution
+    paginate_by = 10
+
+class InstitutionDetailView(generic.DetailView):
+    model = Institution
+
+class PersonListView(generic.ListView):
+    model = Person
+
+class PersonDetailView(generic.DetailView):
+    model = Person
+
+
+
+
 
 
 class BookListView(generic.ListView):
@@ -133,38 +151,4 @@ class AuthorDelete(DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
 
-    
-"""
-
-If you're using function-based views, the easiest way to restrict access to your functions is to apply the login_required decorator to your view function, as shown below. If the user is logged in then your view code will execute as normal. If the user is not logged in, this will redirect to the login URL defined in the project settings (settings.LOGIN_URL), passing the current absolute path as the next URL parameter. If the user succeeds in logging in then they will be returned back to this page, but this time authenticated.
-
----
-
-from django.contrib.auth.decorators import login_required
-
-@login_required
-def my_view(request):
-
----
-
-https://realpython.com/blog/python/primer-on-python-decorators/
-Python allows you to simplify the calling of decorators using the @ symbol (this is called “pie” syntax).
-
---- 
-
-
-Similarly, the easiest way to restrict access to logged-in users in your class-based views is to derive from LoginRequiredMixin. You need to declare this mixin first in the super class list, before the main view class.
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-class MyView(LoginRequiredMixin, View):
-    ...
-This has exactly the same redirect behaviour as the login_required decorator. You can also specify an alternative location to redirect the user to if they are not authenticated (login_url), and a URL parameter name instead of "next" to insert the current absolute path (redirect_field_name).
-
-class MyView(LoginRequiredMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'redirect_to'
-
-
-
-"""
+ 

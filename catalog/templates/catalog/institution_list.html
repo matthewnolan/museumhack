@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Institution List</h1>
+
+    {% if institution_list %}
+    <!-- the_model_name_list -->
+    <ul>
+
+      {% for institution in institution_list %}
+      <li>
+        <a href="{{ institution.get_absolute_url }}">{{ institution.name }}</a> 
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no institutions.</p>
+    {% endif %}       
+{% endblock %}

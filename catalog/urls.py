@@ -21,3 +21,12 @@ urlpatterns += [
     url(r'^author/(?P<pk>\d+)/update/$', views.AuthorUpdate.as_view(), name='author_update'),
     url(r'^author/(?P<pk>\d+)/delete/$', views.AuthorDelete.as_view(), name='author_delete'),
 ]
+
+
+urlpatterns += [
+    url(r'^institutions/$', views.InstitutionListView.as_view(), name='institution'),
+    url(r'^institution/(?P<pk>\d+)$', views.InstitutionDetailView.as_view(), name='institution-detail'),
+
+    url(r'^persons/$', views.PersonListView.as_view(), name='persons'),
+    url(r'^person/(?P<pk>\d+)$', views.PersonDetailView.as_view(), name='person-detail'),    
+]
