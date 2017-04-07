@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '5mv(t^&o*$h=nck+uu8xztqv0c+5b#ajg85dg%=pnjr130062b'
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '5mv(t^&o*$h=nck+uu8xztqv0c+5b#ajg85dg%=pnjr130062b')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '5mvt^&o*$h=nck+uu8xztqv0c+5b#ajg85dg%=pnjr130062b')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -121,7 +121,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
