@@ -2,8 +2,73 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
+from django.urls import reverse #Used to generate URLs by reversing the URL patterns
+import uuid # Required for unique book instances
+
 
 # Create your models here.
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    linkedin = models.URLField(max_length=500)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular author instance.
+        """
+        return reverse('person-detail', args=[str(self.id)])
+    
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return '%s, %s' % (self.last_name, self.first_name)
+
+
+class Donation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular donation")
+
+    person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True) 
+
+    # ie MOMA
+    institution = models.ForeignKey('Institution', on_delete=models.SET_NULL, null=True) 
+
+    # ie Apollo Circle
+    donorgroup = models.ForeignKey('Donorgroup', on_delete=models.SET_NULL, null=True) 
+
+    # Range of amount of money ie  "$500+" or "$1000 to $2000"
+    ammount = models.CharField(max_length=500)
+
+    # Date person donates
+    donation_date = models.DateField(null=True, blank=True)
+
+    # Date at which I collected data
+    collection_date = models.DateField(null=True, blank=True)
+
+    data_source_name = models.CharField(max_length=500) 
+
+    data_source_url = models.CharField(max_length=500)    
+
+    class Meta:
+        ordering = ["due_back"]
+        permissions = (("can_mark_returned", "Set book as returned"),)               
+    def __str__(self):
+        """
+        String for representing the Model object
+        """
+        return '%s (%s)' % (self.id,self.person.title)
+
+
+class Donorgroup(models.Model):
+    name = models.CharField(max_length=200, help_text="Name of the group of donors")
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.name
 
 
 class Genre(models.Model):
@@ -18,8 +83,26 @@ class Genre(models.Model):
         """
         return self.name
 
+class Institution(models.Model):
 
-from django.urls import reverse #Used to generate URLs by reversing the URL patterns
+    name = models.CharField(max_length=100)
+    
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular author instance.
+        """
+        return reverse('institution-detail', args=[str(self.id)])
+    
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return '%s, %s' % (self.name)
+
+
+
+
 
 class Book(models.Model):
     """
@@ -56,7 +139,6 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
 
 
-import uuid # Required for unique book instances
 
 class BookInstance(models.Model):
     """
