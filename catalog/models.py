@@ -2,29 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
-from django.urls import reverse #Used to generate URLs by reversing the URL patterns
+#Used to generate URLs by reversing the URL patterns
+from django.urls import reverse 
 import uuid # Required for unique book instances
 
 
 # Create your models here.
 
+
 class Person(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    person_name = models.CharField(max_length=300, default="John Doe")
     company = models.CharField(max_length=100)
     linkedin = models.URLField(max_length=500)
 
     def get_absolute_url(self):
-        """
-        Returns the url to access a particular author instance.
-        """
         return reverse('person-detail', args=[str(self.id)])
     
     def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return '%s, %s' % (self.last_name, self.first_name)
+        return '%s' % (self.person_name)
 
 
 class Donation(models.Model):
@@ -39,7 +34,7 @@ class Donation(models.Model):
     donorgroup = models.ForeignKey('Donorgroup', on_delete=models.SET_NULL, null=True) 
 
     # Range of amount of money ie  "$500+" or "$1000 to $2000"
-    ammount = models.CharField(max_length=500)
+    amount = models.CharField(max_length=500)
 
     # Date person donates
     donation_date = models.DateField(null=True, blank=True)
@@ -50,25 +45,45 @@ class Donation(models.Model):
     data_source_name = models.CharField(max_length=500) 
 
     data_source_url = models.CharField(max_length=500)    
-
-    class Meta:
-        ordering = ["due_back"]
-        permissions = (("can_mark_returned", "Set book as returned"),)               
+          
     def __str__(self):
-        """
-        String for representing the Model object
-        """
-        return '%s (%s)' % (self.id,self.person.title)
+
+        # String for representing the Model object
+
+        return '%s (%s)' % (self.person.person_name,self.institution)
 
 
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
 
     def __str__(self):
-        """
-        String for representing the Model object (in Admin site etc.)
-        """
+
+        # String for representing the Model object (in Admin site etc.)
+
         return self.name
+
+
+class Institution(models.Model):
+
+    name = models.CharField(max_length=100)
+
+    city = models.CharField(max_length=100, default="NYC")
+    
+    def get_absolute_url(self):
+
+        # Returns the url to access a particular author instance.
+
+        return reverse('institution-detail', args=[str(self.id)])
+    
+    def __str__(self):
+
+        #String for representing the Model object.
+
+        return '%s, %s' % (self.name, self.city)
+
+
+
+
 
 
 class Genre(models.Model):
@@ -82,27 +97,6 @@ class Genre(models.Model):
         String for representing the Model object (in Admin site etc.)
         """
         return self.name
-
-class Institution(models.Model):
-
-    name = models.CharField(max_length=100)
-    
-    def get_absolute_url(self):
-        """
-        Returns the url to access a particular author instance.
-        """
-        return reverse('institution-detail', args=[str(self.id)])
-    
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return '%s, %s' % (self.name)
-
-
-
-
 
 class Book(models.Model):
     """

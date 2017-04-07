@@ -4,6 +4,9 @@ from django.shortcuts import render
 
 from .models import Book, Author, BookInstance, Genre
 from django.contrib.auth.decorators import login_required
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.decorators import permission_required
 
 
 def index(request):
@@ -31,7 +34,6 @@ def index(request):
             'num_visits':num_visits}, # num_visits appended
     )
 
-from django.views import generic
 
 class BookListView(generic.ListView):
     model = Book
@@ -47,7 +49,6 @@ class AuthorDetailView(generic.DetailView):
     model = Author
 
 
-from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """
@@ -61,7 +62,6 @@ class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
 
 
-from django.contrib.auth.decorators import permission_required
 
 class LoanedBooksAllUsersListView(PermissionRequiredMixin,generic.ListView):
     """
