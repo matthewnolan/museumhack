@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Book, Author, BookInstance, Genre, Institution, Person
+from .models import Book, Author, BookInstance, Genre, Person, Donorgroup, Institution 
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
@@ -47,6 +47,12 @@ class PersonListView(generic.ListView):
 
 class PersonDetailView(generic.DetailView):
     model = Person
+
+class DonorgroupListView(generic.ListView):
+    model = Donorgroup
+
+class DonorgroupDetailView(generic.DetailView):
+    model = Donorgroup
 
 
 

@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Donor Group List</h1>
+
+    {% if donorgroup_list %}
+    <!-- the_model_name_list -->
+    <ul>
+
+      {% for donorgroup in donorgroup_list %}
+      <li>
+        <a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.name }}</a>
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no donors.</p>
+    {% endif %}  
+
+{% endblock %}

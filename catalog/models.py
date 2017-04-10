@@ -48,13 +48,17 @@ class Donation(models.Model):
           
     def __str__(self):
 
-        # String for representing the Model object
-
         return '%s (%s)' % (self.person.person_name,self.institution)
 
 
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
+
+    def get_absolute_url(self):
+
+        # Returns the url to access a particular author instance.
+
+        return reverse('donorgroup-detail', args=[str(self.id)])
 
     def __str__(self):
 
@@ -66,19 +70,14 @@ class Donorgroup(models.Model):
 class Institution(models.Model):
 
     name = models.CharField(max_length=100)
-
     city = models.CharField(max_length=100, default="NYC")
     
     def get_absolute_url(self):
-
         # Returns the url to access a particular author instance.
-
         return reverse('institution-detail', args=[str(self.id)])
     
     def __str__(self):
-
         #String for representing the Model object.
-
         return '%s, %s' % (self.name, self.city)
 
 
