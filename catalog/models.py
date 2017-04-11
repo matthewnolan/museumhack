@@ -6,15 +6,13 @@ import uuid
 
 
 class Person(models.Model):
-    person_name = models.CharField(max_length=300, default="John Doe")
-    company = models.CharField(max_length=100)
-    linkedin = models.URLField(max_length=500)
+    name = models.CharField(max_length=300, default="John Doe")
 
     def get_absolute_url(self):
         return reverse('person-detail', args=[str(self.id)])
     
     def __str__(self):
-        return '%s' % (self.person_name)
+        return '%s' % (self.name)
 
 
 class Donation(models.Model):
@@ -79,7 +77,7 @@ class Donation(models.Model):
           
     def __str__(self):
 
-        return '%s (%s)' % (self.person.person_name,self.institution)
+        return '%s (%s)' % (self.person.name,self.institution)
 
 
 class Donorgroup(models.Model):
