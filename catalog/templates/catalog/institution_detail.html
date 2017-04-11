@@ -2,12 +2,29 @@
 
 {% block content %}
   <h1>{{ institution.name }}</h1>
-  <h2>{{ institution.city }}</h2>
+  <p>City: {{ institution.city }}</p>
 
+<table class="table table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Donor</th>
+        <th>Amount</th>
+        <th>Group</th>
+        <th>Donation Name</th>
+        <th>Event</th>
+    </tr>
+    {% for donation in institution.donation_set.all %}
+    <tr>
+        <td>{{donation.donation_date}}</td>
+        <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}}</a></td>
+        <td>{{donation.display_amount}}</td>
+        <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
+        <td>{{donation.donation_full_name}}</td>
+        <td>{{donation.event_name}}</td>
+    </tr>
+    {% endfor %}  
+</table>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>TODO: list donations here</h4>
-  </div>
 
 
 {% endblock %}

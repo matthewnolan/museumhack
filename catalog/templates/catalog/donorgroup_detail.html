@@ -1,6 +1,28 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Name: {{ donorgroup.name }}</h1>
+    <h1>Name: {{ donorgroup.name }}</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Donor</th>
+        <th>Amount</th>
+        <th>Institution</th>
+        <th>Donation Name</th>
+        <th>Event</th>
+    </tr>
+    {% for donation in donorgroup.donation_set.all %}
+    <tr>
+        <td>{{donation.donation_date}}</td>
+        <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}}</a></td>
+        <td>{{donation.display_amount}}</td>
+        <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
+        <td>{{donation.donation_full_name}}</td>
+        <td>{{donation.event_name}}</td>
+    </tr>
+    {% endfor %}  
+</table>
+
 
 {% endblock %}

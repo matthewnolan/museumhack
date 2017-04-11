@@ -1,13 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
-
-#Used to generate URLs by reversing the URL patterns
 from django.urls import reverse 
-import uuid # Required for unique book instances
-
-
-# Create your models here.
+import uuid 
 
 
 class Person(models.Model):
@@ -25,7 +20,15 @@ class Person(models.Model):
 class Donation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular donation")
 
+    # Replace Admin Site Foreign Key Field/Dropdown with Textbox?
+    # https://groups.google.com/forum/#!topic/django-users/zjdbX5ipRqY
     person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True) 
+
+    # bill and melinda gates
+    donation_full_name = models.CharField(max_length=500, null=True, blank=True)
+
+    # Apollo Circle Benefit 2013
+    event_name = models.CharField(max_length=500, null=True, blank=True)
 
     # ie MOMA
     institution = models.ForeignKey('Institution', on_delete=models.SET_NULL, null=True) 
@@ -33,8 +36,22 @@ class Donation(models.Model):
     # ie Apollo Circle
     donorgroup = models.ForeignKey('Donorgroup', on_delete=models.SET_NULL, null=True) 
 
+    DONATION_TYPES = (
+        ('e', 'Exact Value: $100'),
+        ('r', 'Range: $100-$200'),
+        ('p', 'Range: $100 and above'),
+        ('o', 'Just other'),
+    )
+
+    donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='e', help_text='Donation Type')
+
+    amount_exact = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For exact values ie: $100")
+    amount_range_low = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For range low end ie: $100-$200 or for low end of range ie: $100 and above")
+    amount_range_high = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For high end $100-$200")
+
     # Range of amount of money ie  "$500+" or "$1000 to $2000"
-    amount = models.CharField(max_length=500)
+    amount_other = models.CharField(max_length=500, null=True, blank=True, help_text="ie: Plus a special gift from our family")
+
 
     # Date person donates
     donation_date = models.DateField(null=True, blank=True)
@@ -42,9 +59,23 @@ class Donation(models.Model):
     # Date at which I collected data
     collection_date = models.DateField(null=True, blank=True)
 
-    data_source_name = models.CharField(max_length=500) 
+    data_source_name = models.CharField(max_length=500, null=True, blank=True) 
 
-    data_source_url = models.CharField(max_length=500)    
+    data_source_url = models.CharField(max_length=500, null=True, blank=True)  
+
+    def display_amount(self):
+        amount_str = ""
+
+        if self.donation_type == "e":  
+            amount_str = "%s" % ('${:,.2f}'.format(self.amount_exact).rstrip('0').rstrip('.'))        
+        elif self.donation_type == "r":
+            amount_str = "%s - %s" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'), '${:,.2f}'.format(self.amount_range_high).rstrip('0').rstrip('.'))
+        elif self.donation_type == "p":
+            amount_str = "%s and above" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'))
+        elif self.donation_type == "o":
+            amount_str = self.amount_other
+
+        return amount_str
           
     def __str__(self):
 
@@ -80,113 +111,3 @@ class Institution(models.Model):
         #String for representing the Model object.
         return '%s, %s' % (self.name, self.city)
 
-
-
-
-
-
-class Genre(models.Model):
-    """
-    Model representing a book genre (e.g. Science Fiction, Non Fiction).
-    """
-    name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction, French Poetry etc.)")
-    
-    def __str__(self):
-        """
-        String for representing the Model object (in Admin site etc.)
-        """
-        return self.name
-
-class Book(models.Model):
-    """
-    Model representing a book (but not a specific copy of a book).
-    """
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    # Foreign Key used because book can only have one author, but authors can have multiple books
-    # Author as a string rather than object because it hasn't been declared yet in the file.
-    summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
-    isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
-    genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
-    # ManyToManyField used because genre can contain many books. Books can cover many genres.
-    # Genre class has already been defined so we can specify the object above.
-    def display_genre(self):
-            """
-            Creates a string for the Genre. This is required to display genre in Admin.
-            """
-            return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
-    display_genre.short_description = 'Genre'
-
-    
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return self.title
-    
-    
-    def get_absolute_url(self):
-        """
-        Returns the url to access a particular book instance.
-        """
-        return reverse('book-detail', args=[str(self.id)])
-
-
-
-class BookInstance(models.Model):
-    """
-    Model representing a specific copy of a book (i.e. that can be borrowed from the library).
-    """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book across whole library")
-    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True) 
-    imprint = models.CharField(max_length=200)
-    due_back = models.DateField(null=True, blank=True)
-    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
-    LOAN_STATUS = (
-        ('d', 'Maintenance'),
-        ('o', 'On loan'),
-        ('a', 'Available'),
-        ('r', 'Reserved'),
-    )
-
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='d', help_text='Book availability')
-
-    class Meta:
-        ordering = ["due_back"]
-        permissions = (("can_mark_returned", "Set book as returned"),)  
-
-    @property
-    def is_overdue(self):
-        if date.today() > self.due_back:
-            return True
-        return False        
-            
-    def __str__(self):
-        """
-        String for representing the Model object
-        """
-        return '%s (%s)' % (self.id,self.book.title)
-
-
-class Author(models.Model):
-    """
-    Model representing an author.
-    """
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('died', null=True, blank=True)
-    
-    def get_absolute_url(self):
-        """
-        Returns the url to access a particular author instance.
-        """
-        return reverse('author-detail', args=[str(self.id)])
-    
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return '%s, %s' % (self.last_name, self.first_name)
