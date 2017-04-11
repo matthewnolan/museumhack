@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    # 'import_export',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-"""
+
 
 DATABASES = {
     'default': {
@@ -96,7 +97,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+"""
 
 
 # Password validation
