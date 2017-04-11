@@ -77,7 +77,12 @@ class Donation(models.Model):
           
     def __str__(self):
 
-        return '%s (%s)' % (self.person.name,self.institution)
+        if hasattr(self.person, "name"):
+            thisName = self.person.name
+        else:
+            thisName = "No Name" 
+
+        return '%s (%s)' % (thisName,self.institution)
 
 
 class Donorgroup(models.Model):
