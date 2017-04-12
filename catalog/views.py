@@ -33,19 +33,21 @@ def index(request):
 
 class InstitutionListView(generic.ListView):
     model = Institution
-    paginate_by = 10
+    paginate_by = 30   
 
 class InstitutionDetailView(generic.DetailView):
     model = Institution
 
 class PersonListView(generic.ListView):
     model = Person
+    paginate_by = 30   
 
 class PersonDetailView(generic.DetailView):
     model = Person
 
 class DonorgroupListView(generic.ListView):
     model = Donorgroup
+    paginate_by = 30   
 
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup

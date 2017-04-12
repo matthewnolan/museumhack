@@ -1,21 +1,43 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Donor List</h1>
+  <h1>Donor List</h1>
 
-    {% if person_list %}
-    <!-- the_model_name_list -->
-    <ul>
+  {% if person_list %}
+  <!-- the_model_name_list -->
+  <ul>
 
-      {% for person in person_list %}
-      <li>
-        <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
-      </li>
+    {% for person in person_list %}
+    <li>
+      <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+    </li>
+    {% endfor %}
+
+  </ul>
+  {% else %}
+    <p>There are no donors.</p>
+  {% endif %} 
+
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
       {% endfor %}
-
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
     </ul>
-    {% else %}
-      <p>There are no donors.</p>
-    {% endif %}  
+  {% endif %}
 
 {% endblock %}

@@ -8,11 +8,11 @@ print("Running import script")
 # Donation.objects.all().delete()
 # Donation.objects.filter(donation_date="2011-07-01").delete()
 
-def get_all_products():
+def get_all_products(whichfile):
     from catalog.models import Person, Donation, Donorgroup, Institution
     import csv
     from itertools import islice
-    fp = open('dataimport2.csv','r')
+    fp = open(whichfile,'r')
     # You can also put relative path of csv file with respect to    
     # manage.py file
     csvOut = csv.reader(fp, delimiter=',')
@@ -75,6 +75,6 @@ def get_all_products():
 
 
 
-get_all_products()
+get_all_products('imported_data/dataimport2.csv')
 
 
