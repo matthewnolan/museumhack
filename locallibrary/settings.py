@@ -90,8 +90,8 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'museum_db3',
-        'USER': 'admin',
+        'NAME': 'museum_db',
+        'USER': 'jesus',
         'PASSWORD': 'password123',
         'HOST': '',
         'PORT': '',
