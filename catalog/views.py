@@ -8,9 +8,6 @@ from django.contrib.auth.decorators import permission_required
 
 
 def index(request):
-    """
-    View function for home page of site.
-    """
     # Generate counts of some of the main objects
     num_donors=Person.objects.all().count()
     num_donations=Donation.objects.all().count()
@@ -38,9 +35,17 @@ class InstitutionListView(generic.ListView):
 class InstitutionDetailView(generic.DetailView):
     model = Institution
 
+# why cant i do this order_by('donation.first.donation_date_start')   !?!?
 class PersonListView(generic.ListView):
     model = Person
-    paginate_by = 30   
+    print(model.get_most_recent_donation)
+    # ordering = 'model.get_most_recent_donation'
+    paginate_by = 30 
+
+# def PersonListView(request): 
+#     person_list = Person.objects.all().order_by('donation').limit_by()
+#     return render(request, 'catalog/person_list.html', context={'person_list':person_list}) 
+
 
 class PersonDetailView(generic.DetailView):
     model = Person

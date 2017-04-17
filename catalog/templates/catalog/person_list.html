@@ -5,11 +5,12 @@
 
   {% if person_list %}
   <!-- the_model_name_list -->
+  <!-- |dictsortreversed:'donation_set.first.donation_date_start' -->
   <ul>
 
     {% for person in person_list %}
     <li>
-      <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+      <a href="{{ person.get_absolute_url }}">{{ person.name }}</a> Most recent donation:  {{person.get_most_recent_donation}}
     </li>
     {% endfor %}
 

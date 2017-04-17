@@ -8,9 +8,14 @@ import uuid
 class Person(models.Model):
     name = models.CharField(max_length=300, default="John Doe")
 
+    def get_most_recent_donation(self):
+        donation_date_start = self.donation_set.all().order_by('-donation_date_start').first().donation_date_start
+        institution_name = self.donation_set.all().order_by('-donation_date_start').first().institution
+        return '%s, %s ' % (institution_name, donation_date_start)
+
     def get_absolute_url(self):
         return reverse('person-detail', args=[str(self.id)])
-    
+
     def __str__(self):
         return '%s' % (self.name)
 
@@ -25,13 +30,17 @@ class Donation(models.Model):
     # bill and melinda gates
     donation_full_name = models.CharField(max_length=500, null=True, blank=True)
 
+    # Apollo Circle Chairs
+    donation_class = models.CharField(max_length=500, null=True, blank=True)
+
     # Apollo Circle Benefit 2013
     event_name = models.CharField(max_length=500, null=True, blank=True)
 
-    # ie MOMA
+    # The Metropolitan Museum of Art
     institution = models.ForeignKey('Institution', on_delete=models.SET_NULL, null=True) 
 
-    # ie Apollo Circle
+    # Apollo Circle 2013
+    # There will be many groups with the name Apollo Circle who each have a year associated w each group
     donorgroup = models.ForeignKey('Donorgroup', on_delete=models.SET_NULL, null=True) 
 
     DONATION_TYPES = (
@@ -39,6 +48,7 @@ class Donation(models.Model):
         ('r', 'Range: $100-$200'),
         ('p', 'Range: $100 and above'),
         ('o', 'Just other'),
+        ('u', 'Unknown'),
     )
 
     donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='e', help_text='Donation Type')
@@ -52,7 +62,9 @@ class Donation(models.Model):
 
 
     # Date person donates
-    donation_date = models.DateField(null=True, blank=True)
+    donation_date_start = models.DateField(null=True, blank=True)
+
+    donation_date_end = models.DateField(null=True, blank=True)
 
     # Date at which I collected data
     collection_date = models.DateField(null=True, blank=True)
@@ -88,6 +100,8 @@ class Donation(models.Model):
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
 
+    year = models.IntegerField(default="2013", help_text="Year of this group")
+
     def get_absolute_url(self):
 
         # Returns the url to access a particular author instance.
@@ -112,5 +126,5 @@ class Institution(models.Model):
     
     def __str__(self):
         #String for representing the Model object.
-        return '%s, %s' % (self.name, self.city)
+        return self.name
 
