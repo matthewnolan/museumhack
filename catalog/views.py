@@ -58,7 +58,7 @@ class DonorgroupDetailView(generic.DetailView):
 
 
 
-
+# TODO remove this
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -83,7 +83,7 @@ class InstitutionDelete(PermissionRequiredMixin, DeleteView):
 
 
 
-
+# TODO use API or remove it
 from .models import Snippet
 from .serializers import SnippetSerializer
 from rest_framework import generics
