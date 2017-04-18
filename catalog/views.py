@@ -57,13 +57,6 @@ class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
 
 
-class UploadView(LoginRequiredMixin, generic.ListView):
-    model = Donation
-    template_name ='catalog/upload_csv.html'
-
-
-
-
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
