@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'import_export',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -96,7 +98,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 
 # Password validation
