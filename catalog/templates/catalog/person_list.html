@@ -4,16 +4,20 @@
   <h1>All Donors</h1>
 
   {% if person_list %}
+
+  <p>Length: {{ person_list|length }}</p>
   <!-- the_model_name_list -->
   <!-- |dictsortreversed:'donation_set.first.donation_date_start' -->
 
   <table class="table">
     <tr>
+      <th>Id</th>
       <th>Name</th>
       <th>Most recent donation</th>
     </tr>
     {% for person in person_list %}
     <tr>
+      <td>{{person.id}}</td>
       <td><a href="{{ person.get_absolute_url }}">{{ person.name }} ({{person.get_num_donation}})</a></td>
       <td>{{person.get_most_recent_donation}}</td>
     </tr>

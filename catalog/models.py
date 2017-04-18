@@ -4,7 +4,6 @@ from datetime import date
 from django.urls import reverse 
 import uuid 
 
-
 class Person(models.Model):
     name = models.CharField(max_length=300, default="John Doe")
 

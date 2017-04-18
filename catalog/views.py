@@ -3,6 +3,7 @@ from .models import Person, Donation, Donorgroup, Institution
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.db.models import Count, Min, Sum, Avg
 # from django.contrib.auth.decorators import permission_required
 
 
@@ -34,17 +35,12 @@ class InstitutionDetailView(generic.DetailView):
     model = Institution
 
 # TODO cleanup
-# why cant i do this order_by('donation.first.donation_date_start')   !?!?
 class PersonListView(generic.ListView):
-    model = Person
-    # print(model.get_most_recent_donation)
-    # ordering = 'model.get_most_recent_donation'
-    paginate_by = 30 
-
-# def PersonListView(request): 
-#     person_list = Person.objects.all().order_by('donation').limit_by()
-#     return render(request, 'catalog/person_list.html', context={'person_list':person_list}) 
-
+    paginate_by = 90
+    # model = Person
+    # buggy. produces duplicates
+    # queryset = Person.objects.order_by('-donation__donation_date_start')
+    queryset = Person.objects.order_by('name')
 
 class PersonDetailView(generic.DetailView):
     model = Person

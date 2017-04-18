@@ -24,10 +24,24 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Begin Sitemap 
+from django.contrib.sites.models import Site
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps.views import sitemap
+from catalog.models import Person
+person_dict = {
+    'queryset': Person.objects.filter(),
+}
+sitemaps = { 
+    'museum': GenericSitemap(person_dict, priority=0.5)
+}
+# End Sitemap
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^catalog/', include('catalog.urls')),
-    url(r'^$', RedirectView.as_view(url='/catalog/', permanent=True)),
+    url(r'^c/', include('catalog.urls')),
+    url(r'^$', RedirectView.as_view(url='/c/', permanent=True)),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
