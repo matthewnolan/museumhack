@@ -1,17 +1,19 @@
 from django.contrib import admin
-from .models import Person, Donation, Donorgroup, Institution
+from .models import Person, Donation, Donorgroup, Institution, Snippet
 
+# TODO cleanup. remove this
 from import_export import resources, fields
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
 
-
+# TODO cleanup. remove this
 class DonationResource(resources.ModelResource):
     person = fields.Field(
         column_name='person',
         attribute='person',
-        widget=ForeignKeyWidget(Person, 'name'))
+        widget=ForeignKeyWidget(Person, 'name')
+        )
     institution = fields.Field(
         column_name='institution',
         attribute='institution',
@@ -28,7 +30,10 @@ class DonationResource(resources.ModelResource):
 class DonationAdmin(ImportExportModelAdmin):
     resource_class = DonationResource
 
+
+
 admin.site.register(Person)
 admin.site.register(Donation, DonationAdmin)
 admin.site.register(Donorgroup)
 admin.site.register(Institution)
+admin.site.register(Snippet)
