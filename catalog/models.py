@@ -118,7 +118,7 @@ class Donorgroup(models.Model):
 class Institution(models.Model):
 
     name = models.CharField(max_length=100)
-    city = models.CharField(max_length=100, default="NYC")
+    city = models.CharField(max_length=100)
     
     def get_absolute_url(self):
         return reverse('institution-detail', args=[str(self.id)])

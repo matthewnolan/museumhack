@@ -19,6 +19,12 @@ urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+urlpatterns += [  
+    url(r'^institution/create/$', views.InstitutionCreate.as_view(), name='institution_create'),
+    url(r'^institution/(?P<pk>\d+)/update/$', views.InstitutionUpdate.as_view(), name='institution_update'),
+    url(r'^institution/(?P<pk>\d+)/delete/$', views.InstitutionDelete.as_view(), name='author_delete'),
+]
+
 
 
 
@@ -28,6 +34,8 @@ urlpatterns += [
 
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+
+from rest_framework.urlpatterns import format_suffix_patterns
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -50,4 +58,6 @@ urlpatterns += [
     url(r'^snippets/$', views.snippet_list),
     url(r'^snippets/(?P<pk>[0-9]+)/$', views.snippet_detail),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
 
