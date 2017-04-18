@@ -4,23 +4,14 @@
   <h1>{{ institution.name }}</h1>
   <p>City: {{ institution.city }}</p>
 
-<table class="table table-striped">
+<br><br>
+<table class="table">
     <tr>
-        <th>Date</th>
-        <th>Donor</th>
-        <th>Amount</th>
-        <th>Group</th>
-        <th>Donation Name</th>
-        <th>Event</th>
+        <th>Name of Donor Groups</th>
     </tr>
-    {% for donation in institution.donation_set.all %}
+    {% for donorgroup in institution.donorgroup_set.all %}
     <tr>
-        <td>{{donation.donation_date}}</td>
-        <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}}</a></td>
-        <td>{{donation.display_amount}}</td>
-        <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
-        <td>{{donation.donation_full_name}}</td>
-        <td>{{donation.event_name}}</td>
+        <td><a href="{% url 'donorgroup-detail' donorgroup.pk %}">{{donorgroup.name}}</a></td>
     </tr>
     {% endfor %}  
 </table>

@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Donor Group List</h1>
+  <h1>All Donor Groups</h1>
 
   {% if donorgroup_list %}
   <!-- the_model_name_list -->
@@ -9,7 +9,7 @@
 
     {% for donorgroup in donorgroup_list %}
     <li>
-      <a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.name }}</a>
+      <a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.institution.name }}: {{ donorgroup.name }}</a>
     </li>
     {% endfor %}
 

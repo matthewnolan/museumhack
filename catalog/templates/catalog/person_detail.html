@@ -3,24 +3,32 @@
 {% block content %}
     <h1>Name: {{ person.name }}</h1>
 
-<br>
+    <p>Member of:</p>
+    {% for donation in person.donation_set.all %}
 
+        <div><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.institution}}: {{donation.donorgroup}}</a>, {{donation.donation_date_start.year}}</div>
 
-<table class="table table-striped">
+    {% endfor %} 
+
+<br><br> 
+<p>Previous table, will be removed</p>
+<table class="table">
     <tr>
         <th>Date</th>
         <th>Amount</th>
         <th>Institution</th>
         <th>Group</th>
-        <th>Donation Name</th>
+        <th>Donation Class</th>
+        <th>Donation Full Name</th>
         <th>Event</th>
     </tr>
     {% for donation in person.donation_set.all %}
     <tr>
-        <td>{{donation.donation_date}}</td>
+        <td>{{donation.donation_date_start.year}}</td>
         <td>{{donation.display_amount}}</td>
         <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
         <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
+        <td>{{donation.donation_class}}</td>
         <td>{{donation.donation_full_name}}</td>
         <td>{{donation.event_name}}</td>
     </tr>

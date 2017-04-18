@@ -13,6 +13,9 @@ class Person(models.Model):
         institution_name = self.donation_set.all().order_by('-donation_date_start').first().institution
         return '%s, %s ' % (institution_name, donation_date_start)
 
+    def get_num_donation(self):
+        return self.donation_set.all().count()
+
     def get_absolute_url(self):
         return reverse('person-detail', args=[str(self.id)])
 
@@ -102,16 +105,13 @@ class Donorgroup(models.Model):
 
     year = models.IntegerField(default="2013", help_text="Year of this group")
 
+    institution = models.ForeignKey('Institution', on_delete=models.SET_NULL, null=True) 
+    
     def get_absolute_url(self):
-
-        # Returns the url to access a particular author instance.
-
         return reverse('donorgroup-detail', args=[str(self.id)])
 
     def __str__(self):
-
         # String for representing the Model object (in Admin site etc.)
-
         return self.name
 
 
@@ -121,7 +121,6 @@ class Institution(models.Model):
     city = models.CharField(max_length=100, default="NYC")
     
     def get_absolute_url(self):
-        # Returns the url to access a particular author instance.
         return reverse('institution-detail', args=[str(self.id)])
     
     def __str__(self):

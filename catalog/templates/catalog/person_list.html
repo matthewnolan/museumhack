@@ -1,20 +1,25 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Donor List</h1>
+  <h1>All Donors</h1>
 
   {% if person_list %}
   <!-- the_model_name_list -->
   <!-- |dictsortreversed:'donation_set.first.donation_date_start' -->
-  <ul>
 
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Most recent donation</th>
+    </tr>
     {% for person in person_list %}
-    <li>
-      <a href="{{ person.get_absolute_url }}">{{ person.name }}</a> Most recent donation:  {{person.get_most_recent_donation}}
-    </li>
+    <tr>
+      <td><a href="{{ person.get_absolute_url }}">{{ person.name }} ({{person.get_num_donation}})</a></td>
+      <td>{{person.get_most_recent_donation}}</td>
+    </tr>
     {% endfor %}
+  </table>
 
-  </ul>
   {% else %}
     <p>There are no donors.</p>
   {% endif %} 

@@ -15,4 +15,5 @@ urlpatterns += [
        
     url(r'^institutions/$', views.InstitutionListView.as_view(), name='institutions'),
     url(r'^institution/(?P<pk>\d+)$', views.InstitutionDetailView.as_view(), name='institution-detail'),
+    url(r'^uploadcsv/$', views.UploadView.as_view(), name='uploadcsv'),
 ]

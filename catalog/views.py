@@ -38,7 +38,7 @@ class InstitutionDetailView(generic.DetailView):
 # why cant i do this order_by('donation.first.donation_date_start')   !?!?
 class PersonListView(generic.ListView):
     model = Person
-    print(model.get_most_recent_donation)
+    # print(model.get_most_recent_donation)
     # ordering = 'model.get_most_recent_donation'
     paginate_by = 30 
 
@@ -56,3 +56,10 @@ class DonorgroupListView(generic.ListView):
 
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
+
+
+class UploadView(LoginRequiredMixin, generic.ListView):
+    model = Donation
+    template_name ='catalog/upload_csv.html'
+
+
