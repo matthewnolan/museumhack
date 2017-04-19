@@ -6,33 +6,23 @@
     <p><a href="{% url 'institution-detail' donorgroup.institution.pk %}">{{ donorgroup.institution }}</a></p>
   </div>
 
-  <p>Members:</p>
+<!--   <p>TODO make it like this   Members:</p>
   <ul>
     <li>John Doe: 2011, 2012</li>
     <li>Ringo Starr: 2012</li>
     <li>Paul McCartney: 2013</li>
-  </ul>
-
-  <br><br> 
-  <p>Previous table, will be removed</p>
-  <h4>Donations</h4>
+  </ul> -->
+  <br>
+  <h4>Members</h4>
   <table class="table table-hover noborder">
     <tr>
-      <th>Date</th>
       <th>Donor</th>
-      <th>Amount</th>
-      <th>Donation Class</th>
-      <th>Donation Full Name</th>
-      <th>Event</th>
+      <th>Years Active</th>
     </tr>
-    {% for donation in donorgroup.donation_set.all %}
+    {% for donation in donorgroup.donation_set.all|dictsort:"person.name" %}
     <tr>
-      <td>{{donation.donation_date_start}}</td>
       <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}} ({{donation.person.get_num_donation}})</a></td>
-      <td>{{donation.display_amount}}</td>
-      <td>{{donation.donation_class}}</td>
-      <td>{{donation.donation_full_name}}</td>
-      <td>{{donation.event_name}}</td>
+      <td>{{donation.donation_date_start.year}}</td>
     </tr>
     {% endfor %}  
   </table>

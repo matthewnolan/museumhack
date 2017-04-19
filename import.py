@@ -60,10 +60,12 @@ def get_all_products(whichfile):
             amount_range_low=line[7],
             amount_range_high=line[8],
             amount_other=line[9],
-            donation_date=line[10],
-            collection_date=line[11],
-            data_source_name=line[12],
-            data_source_url=line[13],
+            donation_date_start=line[10],
+            donation_date_end=line[11],
+            collection_date=line[12],
+            data_source_name=line[13],
+            data_source_url=line[14],
+            donation_class=line[15],
             person=p1,
             institution=i1,
             donorgroup=dg1
@@ -74,7 +76,5 @@ def get_all_products(whichfile):
     print("saved %s donations" % savedCount)
 
 
-
 get_all_products('imported_data/dataimport2.csv')
-
 

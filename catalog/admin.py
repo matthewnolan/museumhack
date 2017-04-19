@@ -36,5 +36,3 @@ admin.site.register(Donation, DonationAdmin)
 admin.site.register(Donorgroup)
 admin.site.register(Institution)
 
-# TODO remove. From API test
-admin.site.register(Snippet)

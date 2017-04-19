@@ -18,7 +18,6 @@ def index(request):
     num_visits=request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits+1
 
-    # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'index.html',
@@ -63,6 +62,7 @@ class DonorgroupListView(generic.ListView):
 
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
+    # queryset = Donorgroup.objects.order_by('donation__person')
 
 
 

@@ -7,35 +7,36 @@
 
   <p>Member of:</p>
   {% for donation in person.donation_set.all %}
-
       <div><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.institution}}: {{donation.donorgroup}}</a>, {{donation.donation_date_start.year}}</div>
 
   {% endfor %} 
 
-<br><br>
-<p>Previous table, will be removed</p>
+<br>
 <h4>Donations</h4>
 <table class="table table-hover noborder">
   <tr>
-      <th>Year</th>
+      <th>Date</th>
       <th>Amount</th>
-      <th>Institution</th>
+      <th>Museum</th>
       <th>Group</th>
       <th>Donation Class</th>
       <th>Donation Full Name</th>
       <th>Event</th>
+      <th>Source</th>
   </tr>
   {% for donation in person.donation_set.all %}
   <tr>
-      <td>{{donation.donation_date_start.year}}</td>
+      <td>{{donation.donation_date_start}} {% if donation.donation_date_end %}- <br>{{donation.donation_date_end}} {% endif %}</td>
       <td>{{donation.display_amount}}</td>
       <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
       <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
       <td>{{donation.donation_class}}</td>
       <td>{{donation.donation_full_name}}</td>
       <td>{{donation.event_name}}</td>
+      <td><a href="{{donation.data_source_url}}" target="_blank">{{donation.data_source_name}}</a></td>
   </tr>
   {% endfor %}  
 </table>
+  
 
 {% endblock %}
