@@ -89,5 +89,5 @@ def get_all_products(whichfile):
     print("saved %s donations" % savedCount)
 
 
-get_all_products('imported_data/dataimport1.csv')
+get_all_products('imported_data/Museum Data Template - D3- MAH in Santa Cruz 2011-2012 Annual Report (2).csv')
 
