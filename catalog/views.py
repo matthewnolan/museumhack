@@ -54,7 +54,6 @@ class PersonDetailView(generic.DetailView):
 
 class DonorgroupListView(generic.ListView):
     model = Donorgroup
-    paginate_by = 30   
     def get_context_data(self, **kwargs):
         context = super(DonorgroupListView, self).get_context_data(**kwargs)
         context['num_donorgroups'] = Donorgroup.objects.all().count()
@@ -62,6 +61,8 @@ class DonorgroupListView(generic.ListView):
 
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
+    paginate_by = 30   
+
     # queryset = Donorgroup.objects.order_by('donation__person')
 
 
