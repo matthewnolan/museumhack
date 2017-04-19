@@ -6,7 +6,7 @@ from datetime import datetime
 import uuid 
 
 class Person(models.Model):
-    name = models.CharField(max_length=300, default="John Doe")
+    name = models.CharField(max_length=300)
 
     def get_most_recent_donation(self):
         donation_date_start = self.donation_set.all().order_by('-donation_date_start').first().donation_date_start
@@ -30,7 +30,7 @@ class Donation(models.Model):
     # https://groups.google.com/forum/#!topic/django-users/zjdbX5ipRqY
     person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True) 
 
-    # bill and melinda gates
+    # bill and melinda gates gift for the arts
     donation_full_name = models.CharField(max_length=500, null=True, blank=True)
 
     # Apollo Circle Chairs
@@ -54,26 +54,27 @@ class Donation(models.Model):
         ('u', 'Unknown'),
     )
 
-    donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='e', help_text='Donation Type')
+    donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='u', help_text='Donation Type')
 
-    amount_exact = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For exact values ie: $100")
-    amount_range_low = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For range low end ie: $100-$200 or for low end of range ie: $100 and above")
-    amount_range_high = models.DecimalField(max_digits=99, decimal_places=2, default=0, help_text="For high end $100-$200")
+    amount_exact = models.DecimalField(max_digits=99, decimal_places=2, null=True, blank=True, help_text="For exact values ie: $100")
+
+    amount_range_low = models.DecimalField(max_digits=99, decimal_places=2, null=True, blank=True, help_text="For range low end ie: $100-$200 or for low end of range ie: $100 and above")
+
+    amount_range_high = models.DecimalField(max_digits=99, decimal_places=2, null=True, blank=True, help_text="For high end $100-$200")
 
     # Range of amount of money ie  "$500+" or "$1000 to $2000"
     amount_other = models.CharField(max_length=500, null=True, blank=True, help_text="ie: Plus a special gift from our family")
 
-
     # Date person donates
-    donation_date_start = models.DateField(null=True, blank=True)
+    donation_date_start = models.DateField(default=date.today)
 
+    # Date person donates. Some dates are a range
     donation_date_end = models.DateField(null=True, blank=True)
 
     # Date at which I collected data
     collection_date = models.DateField(null=True, blank=True)
 
-    # date_entered = models.DateField(auto_now_add=True, help_text="Date entered into this databse")
-    # date_entered = models.DateField(default=datetime.now(), help_text="Date entered into this databse")
+    date_entered = models.DateTimeField(default=datetime.now, help_text="Date entered into this database")
 
     data_source_name = models.CharField(max_length=500, null=True, blank=True) 
 
@@ -89,12 +90,13 @@ class Donation(models.Model):
         elif self.donation_type == "p":
             amount_str = "%s and above" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'))
         elif self.donation_type == "o":
-            amount_str = self.amount_other
+            amount_str = self.amount_other        
+        elif self.donation_type == "u":
+            amount_str = "unknown"
 
         return amount_str
           
     def __str__(self):
-
         if hasattr(self.person, "name"):
             thisName = self.person.name
         else:
@@ -106,7 +108,7 @@ class Donation(models.Model):
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
 
-    year = models.IntegerField(default="2013", help_text="Year of this group")
+    year = models.IntegerField(null=True, blank=True, help_text="Year of this group")
 
     institution = models.ForeignKey('Institution', on_delete=models.SET_NULL, null=True) 
     
@@ -119,7 +121,6 @@ class Donorgroup(models.Model):
 
 
 class Institution(models.Model):
-
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     
