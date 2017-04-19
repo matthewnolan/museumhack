@@ -1,4 +1,4 @@
-#  python3 manage.py shell < import.py  
+# python manage.py shell < import.py
 
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "catalog.settings")
@@ -17,8 +17,14 @@ def get_all_products(whichfile):
     # manage.py file
     csvOut = csv.reader(fp, delimiter=',')
     savedCount = 0
+
     # islice skips the first row of the csv
     for line in islice(csvOut, 1, None):
+
+        # replace empty strings with None
+        for n,i in enumerate(line):
+            if i=="":
+                line[n]=None 
 
         # search for user
         this_person = line[0]
@@ -38,9 +44,10 @@ def get_all_products(whichfile):
         if len(i1DoesExist) == 0:
             i1 = Institution(name=this_institution)
             i1.save()
+            print("new institution %s" % line[3])
         else:
             i1 = i1DoesExist[0]
-
+            print("duplicate institution %s" % line[3])
 
         # search for Donorgroup
         this_donorgroup = line[4]
@@ -48,9 +55,10 @@ def get_all_products(whichfile):
         if len(Dg1DoesExist) == 0:
             dg1 = Donorgroup(name=this_donorgroup)
             dg1.save()
+            print("new donorgroup %s" % line[4])
         else:
             dg1 = Dg1DoesExist[0]
-
+            print("duplicate donorgroup %s" % line[4])
 
         d1 = Donation(
             donation_full_name=line[1],
@@ -70,11 +78,16 @@ def get_all_products(whichfile):
             institution=i1,
             donorgroup=dg1
         )
-        d1.save()
-        savedCount += 1
+        try:
+            d1.save()
+            print("Saved:", savedCount)
+            savedCount += 1
+        except:
+            print("Unexpected error")
+            break
 
     print("saved %s donations" % savedCount)
 
 
-get_all_products('imported_data/dataimport2.csv')
+get_all_products('imported_data/dataimport1.csv')
 

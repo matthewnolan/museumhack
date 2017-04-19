@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 from django.urls import reverse 
-from datetime import datetime
+from django.utils import timezone
 import uuid 
 
 class Person(models.Model):
@@ -74,7 +74,7 @@ class Donation(models.Model):
     # Date at which I collected data
     collection_date = models.DateField(null=True, blank=True)
 
-    date_entered = models.DateTimeField(default=datetime.now, help_text="Date entered into this database")
+    date_entered = models.DateTimeField(default=timezone.now, help_text="Date entered into this database")
 
     data_source_name = models.CharField(max_length=500, null=True, blank=True) 
 
