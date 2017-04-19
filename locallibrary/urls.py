@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 
 # Begin Sitemap 
+# TODO Clean this Sitemap area
 # Make sure a url is set /admin/sites/site/
 from django.contrib.sites.models import Site
 from django.contrib.sitemaps import GenericSitemap

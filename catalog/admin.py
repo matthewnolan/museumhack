@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, Donation, Donorgroup, Institution, Snippet
+from .models import Person, Donation, Donorgroup, Institution
 
 # import export is useful for backup
 from import_export import resources, fields
@@ -30,6 +30,9 @@ class DonationResource(resources.ModelResource):
 
 class DonationAdmin(ImportExportModelAdmin):
     resource_class = DonationResource
+
+
+
 
 admin.site.register(Person)
 admin.site.register(Donation, DonationAdmin)

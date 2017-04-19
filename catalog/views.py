@@ -92,7 +92,7 @@ class InstitutionDelete(PermissionRequiredMixin, DeleteView):
 
 
 # TODO use API or remove it
-from .models import Snippet
+# from .models import Snippet
 from .serializers import SnippetSerializer
 from rest_framework import generics
 from rest_framework import permissions
