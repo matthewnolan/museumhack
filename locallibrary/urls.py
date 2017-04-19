@@ -23,17 +23,29 @@ from django.views.generic import RedirectView
 # Use static() to add url mapping to serve static files during development (only)
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
 
 # Begin Sitemap 
+# Make sure a url is set /admin/sites/site/
 from django.contrib.sites.models import Site
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
-from catalog.models import Person
+from catalog.models import Person, Institution, Donorgroup
+from catalog.sitemaps import StaticViewSitemap
 person_dict = {
-    'queryset': Person.objects.filter(),
+    'queryset': Person.objects.all(),
+}
+institution_dict = {
+    'queryset': Institution.objects.all(),
+}
+donorgroups_dict = {
+    'queryset': Donorgroup.objects.all(),
 }
 sitemaps = { 
-    'museum': GenericSitemap(person_dict, priority=0.5)
+    'person': GenericSitemap(person_dict, priority=0.5),
+    'institution': GenericSitemap(institution_dict, priority=0.5),
+    'donorgroups': GenericSitemap(donorgroups_dict, priority=0.5),
+    'static': StaticViewSitemap
 }
 # End Sitemap
 
@@ -42,6 +54,7 @@ urlpatterns = [
     url(r'^c/', include('catalog.urls')),
     url(r'^$', RedirectView.as_view(url='/c/', permanent=True)),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /admin", content_type='text/plain')),
 ]
 
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

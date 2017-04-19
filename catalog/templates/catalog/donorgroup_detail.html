@@ -1,39 +1,42 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Donor Group: {{ donorgroup.name }}</h1>
-    <h3>Institution: <a href="{% url 'institution-detail' donorgroup.institution.pk %}">{{ donorgroup.institution }}</a></h3>
+  <div class="page-header">
+    <h1>Group: {{ donorgroup.name }}</h1>
+    <p><a href="{% url 'institution-detail' donorgroup.institution.pk %}">{{ donorgroup.institution }}</a></p>
+  </div>
 
-
-<p>Members:</p>
-<ul>
+  <p>Members:</p>
+  <ul>
     <li>John Doe: 2011, 2012</li>
     <li>Ringo Starr: 2012</li>
     <li>Paul McCartney: 2013</li>
-</ul>
+  </ul>
 
-<br><br> 
-<p>Previous table, will be removed</p>
-<table class="table">
+  <br><br> 
+  <p>Previous table, will be removed</p>
+  <h4>Donations</h4>
+  <table class="table table-hover noborder">
     <tr>
-        <th>Date</th>
-        <th>Donor</th>
-        <th>Amount</th>
-        <th>Donation Class</th>
-        <th>Donation Full Name</th>
-        <th>Event</th>
+      <th>Date</th>
+      <th>Donor</th>
+      <th>Amount</th>
+      <th>Donation Class</th>
+      <th>Donation Full Name</th>
+      <th>Event</th>
     </tr>
     {% for donation in donorgroup.donation_set.all %}
     <tr>
-        <td>{{donation.donation_date_start}}</td>
-        <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}} ({{donation.person.get_num_donation}})</a></td>
-        <td>{{donation.display_amount}}</td>
-        <td>{{donation.donation_class}}</td>
-        <td>{{donation.donation_full_name}}</td>
-        <td>{{donation.event_name}}</td>
+      <td>{{donation.donation_date_start}}</td>
+      <td><a href="{% url 'person-detail' donation.person.pk %}">{{donation.person}} ({{donation.person.get_num_donation}})</a></td>
+      <td>{{donation.display_amount}}</td>
+      <td>{{donation.donation_class}}</td>
+      <td>{{donation.donation_full_name}}</td>
+      <td>{{donation.event_name}}</td>
     </tr>
     {% endfor %}  
-</table>
+  </table>
 
+{% include 'catalog/pagination.html' %} 
 
 {% endblock %}

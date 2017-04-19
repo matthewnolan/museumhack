@@ -1,38 +1,41 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Name: {{ person.name }}</h1>
+  <div class="page-header">
+    <h1>{{ person.name }}</h1>
+  </div>
 
-    <p>Member of:</p>
-    {% for donation in person.donation_set.all %}
+  <p>Member of:</p>
+  {% for donation in person.donation_set.all %}
 
-        <div><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.institution}}: {{donation.donorgroup}}</a>, {{donation.donation_date_start.year}}</div>
+      <div><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.institution}}: {{donation.donorgroup}}</a>, {{donation.donation_date_start.year}}</div>
 
-    {% endfor %} 
+  {% endfor %} 
 
-<br><br> 
+<br><br>
 <p>Previous table, will be removed</p>
-<table class="table">
-    <tr>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Institution</th>
-        <th>Group</th>
-        <th>Donation Class</th>
-        <th>Donation Full Name</th>
-        <th>Event</th>
-    </tr>
-    {% for donation in person.donation_set.all %}
-    <tr>
-        <td>{{donation.donation_date_start.year}}</td>
-        <td>{{donation.display_amount}}</td>
-        <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
-        <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
-        <td>{{donation.donation_class}}</td>
-        <td>{{donation.donation_full_name}}</td>
-        <td>{{donation.event_name}}</td>
-    </tr>
-    {% endfor %}  
+<h4>Donations</h4>
+<table class="table table-hover noborder">
+  <tr>
+      <th>Year</th>
+      <th>Amount</th>
+      <th>Institution</th>
+      <th>Group</th>
+      <th>Donation Class</th>
+      <th>Donation Full Name</th>
+      <th>Event</th>
+  </tr>
+  {% for donation in person.donation_set.all %}
+  <tr>
+      <td>{{donation.donation_date_start.year}}</td>
+      <td>{{donation.display_amount}}</td>
+      <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
+      <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
+      <td>{{donation.donation_class}}</td>
+      <td>{{donation.donation_full_name}}</td>
+      <td>{{donation.event_name}}</td>
+  </tr>
+  {% endfor %}  
 </table>
 
 {% endblock %}

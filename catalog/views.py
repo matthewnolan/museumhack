@@ -29,7 +29,11 @@ def index(request):
 
 class InstitutionListView(generic.ListView):
     model = Institution
-    paginate_by = 30   
+    paginate_by = 30
+    def get_context_data(self, **kwargs):
+        context = super(InstitutionListView, self).get_context_data(**kwargs)
+        context['num_institutions'] = Institution.objects.all().count()
+        return context      
 
 class InstitutionDetailView(generic.DetailView):
     model = Institution
@@ -41,6 +45,10 @@ class PersonListView(generic.ListView):
     # buggy. produces duplicates
     # queryset = Person.objects.order_by('-donation__donation_date_start')
     queryset = Person.objects.order_by('name')
+    def get_context_data(self, **kwargs):
+        context = super(PersonListView, self).get_context_data(**kwargs)
+        context['num_donors'] = Person.objects.all().count()
+        return context    
 
 class PersonDetailView(generic.DetailView):
     model = Person
@@ -48,6 +56,10 @@ class PersonDetailView(generic.DetailView):
 class DonorgroupListView(generic.ListView):
     model = Donorgroup
     paginate_by = 30   
+    def get_context_data(self, **kwargs):
+        context = super(DonorgroupListView, self).get_context_data(**kwargs)
+        context['num_donorgroups'] = Donorgroup.objects.all().count()
+        return context      
 
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup

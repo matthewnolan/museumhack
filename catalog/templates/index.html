@@ -1,17 +1,20 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Museum Donor List</h1>
+  <div class="page-header">
+		<h1>Museum Donor List<br>
+		<small>A project to document all donations made to museums</small>
+		</h1>
+	</div>
 
-  <p>Welcome to <em>MuseumList</em>.</p>
-
-  <p>The database has the following record counts:</p>
-  <ul>
+  <h4>Stats:</h4>
+  <ul class="list-unstyled">
     <li><strong>Donors:</strong> {{ num_donors }}</li>
     <li><strong>Donations:</strong> {{ num_donations }}</li>
     <li><strong>Donation Groups:</strong> {{ num_donorgroups }}</li>
     <li><strong>Museums &amp; Institutions:</strong> {{ num_institutions }}</li>
   </ul>
-<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+	<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+	<br><br>
 
 {% endblock %}

@@ -1,45 +1,29 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>All Donor Groups</h1>
-
+  <div class="page-header">
+    <h1>All Donor Groups</h1>
+    <p>{{ num_donorgroups }} results</p>
+  </div>
   {% if donorgroup_list %}
-  <!-- the_model_name_list -->
-  <ul>
 
+  <table class="table table-hover noborder">
+    <tr>
+      <th>Name</th>
+      <th>Museum</th>
+    </tr>
     {% for donorgroup in donorgroup_list %}
-    <li>
-      <a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.institution.name }}: {{ donorgroup.name }}</a>
-    </li>
+    <tr>
+      <td><a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.name }}</a></td>
+      <td>{{donorgroup.institution}}</td>
+    </tr>
     {% endfor %}
+  </table>
 
-  </ul>
   {% else %}
-    <p>There are no donors.</p>
-  {% endif %}  
+    <p>There are no donor groups.</p>
+  {% endif %} 
 
-
-  {% if is_paginated %}
-    <ul class="pagination">
-      {% if page_obj.has_previous %}
-        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
-      {% endif %}
-      {% for i in paginator.page_range %}
-        {% if page_obj.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
-    </ul>
-  {% endif %}
-
+{% include 'catalog/pagination.html' %}
 
 {% endblock %}

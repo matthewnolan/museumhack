@@ -3,3 +3,11 @@
     padding: 0;
     list-style: none;
 }
+
+#maincontainer {
+	background-color: #fff;
+}
+
+.noborder * {
+	border-top:0px !important;
+}

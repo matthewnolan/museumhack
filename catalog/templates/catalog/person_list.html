@@ -1,23 +1,21 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>All Donors</h1>
-
+  <div class="page-header">
+    <h1>All Museum Donors</h1>
+    <p>{{ num_donors }} results</p>
+  </div>
   {% if person_list %}
 
-  <p>Length: {{ person_list|length }}</p>
-  <!-- the_model_name_list -->
-  <!-- |dictsortreversed:'donation_set.first.donation_date_start' -->
+  <!-- <p class="hidden">Length: {{ person_list|length }}</p> -->
 
-  <table class="table">
+  <table class="table table-hover noborder">
     <tr>
-      <th>Id</th>
       <th>Name</th>
       <th>Most recent donation</th>
     </tr>
     {% for person in person_list %}
     <tr>
-      <td>{{person.id}}</td>
       <td><a href="{{ person.get_absolute_url }}">{{ person.name }} ({{person.get_num_donation}})</a></td>
       <td>{{person.get_most_recent_donation}}</td>
     </tr>
@@ -28,26 +26,6 @@
     <p>There are no donors.</p>
   {% endif %} 
 
-  {% if is_paginated %}
-    <ul class="pagination">
-      {% if page_obj.has_previous %}
-        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
-      {% endif %}
-      {% for i in paginator.page_range %}
-        {% if page_obj.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
-    </ul>
-  {% endif %}
+{% include 'catalog/pagination.html' %} 
 
 {% endblock %}
