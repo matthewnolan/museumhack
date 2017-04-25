@@ -79,6 +79,12 @@ class Donation(models.Model):
     data_source_name = models.CharField(max_length=500, null=True, blank=True) 
 
     data_source_url = models.CharField(max_length=500, null=True, blank=True)  
+    
+    # The name of the spreadsheet from which we import the data. For internal use only. We wont show this data to users.
+    donation_list = models.CharField(max_length=500, null=True, blank=True)   
+
+    # ie Museum Holiday Party 
+    event_date_title = models.CharField(max_length=500, null=True, blank=True)  
 
     def display_amount(self):
         amount_str = ""
