@@ -29,6 +29,7 @@ class Person(models.Model):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Donation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular donation")
 

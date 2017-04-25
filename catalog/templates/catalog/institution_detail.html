@@ -17,21 +17,21 @@
   </table>
 
   <br>
-  <!-- <h4>Donor Lists</h4> -->
-  <table class="table table-hover noborder">
-    {% for institution_donor_list in institution_donor_lists %}
-    <tr>
-        <td>{{institution_donor_list.donation_list}}</td>
-    </tr>
-    {% endfor %}  
-  </table>
-
-  <br>
   <h4>Donor Group and Special Events</h4>
   <table class="table table-hover noborder">
     {% for institution_donorgroup in institution_donorgroups %}
     <tr>
         <td><a href="{% url 'donorgroup-detail' institution_donorgroup.pk %}">{{institution_donorgroup.name}}</td>
+    </tr>
+    {% endfor %}  
+  </table>
+
+  <br>
+  <h4>Donor Lists</h4>
+  <table class="table table-hover noborder">
+    {% for institution_donor_list in institution_donor_lists %}
+    <tr>
+        <td>{{institution_donor_list.donation_list}}</td>
     </tr>
     {% endfor %}  
   </table>
