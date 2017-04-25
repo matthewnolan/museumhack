@@ -15,7 +15,7 @@
     {% for donorgroup in donorgroup_list %}
     <tr>
       <td><a href="{{ donorgroup.get_absolute_url }}">{{ donorgroup.name }}</a></td>
-      <td>{{donorgroup.institution}}</td>
+      <td><a href="{{ donorgroup.institution.get_absolute_url }}">{{donorgroup.institution}}</a></td>
     </tr>
     {% endfor %}
   </table>

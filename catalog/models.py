@@ -17,7 +17,7 @@ class Person(models.Model):
     def get_most_recent_donation(self):
         donation_date_start = self.donation_set.all().order_by('-donation_date_start').first().donation_date_start
         institution_name = self.donation_set.all().order_by('-donation_date_start').first().institution
-        return '%s, %s ' % (institution_name, donation_date_start)
+        return '%s, %s ' % (donation_date_start.year, institution_name)
 
     def get_num_donation(self):
         return self.donation_set.all().count()

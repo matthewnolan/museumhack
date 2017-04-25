@@ -11,7 +11,7 @@
 
   <table class="table table-hover noborder">
     <tr>
-      <th>Name</th>
+      <th><a href="?orderby=-name{% for key,value in request.GET.items %}{% ifnotequal key 'orderby' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Name</a> <a href="?orderby=-num_donations{% for key,value in request.GET.items %}{% ifnotequal key 'orderby' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">(donations)</a></th>
       <th>Most recent donation</th>
     </tr>
     {% for person in person_list %}

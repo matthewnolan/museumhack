@@ -5,6 +5,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.db.models import Count, Min, Sum, Avg
 # from django.contrib.auth.decorators import permission_required
+from django.db.models import Count, Max, Min
 
 
 def index(request):
@@ -22,7 +23,7 @@ def index(request):
         request,
         'index.html',
          context={'num_donors':num_donors,'num_donations':num_donations,'num_donorgroups':num_donorgroups,'num_institutions':num_institutions,
-            'num_visits':num_visits}, # num_visits appended
+            'num_visits':num_visits}, 
     )
 
 
@@ -34,8 +35,6 @@ class InstitutionListView(generic.ListView):
         context['num_institutions'] = Institution.objects.all().count()
         return context      
 
-
-from django.db.models import Count, Max, Min
 
 def InstitutionDetailView(request, pk):
     this_institution = Institution.objects.get(pk=pk)
@@ -52,6 +51,7 @@ def InstitutionDetailView(request, pk):
          'institution_donorgroups': institution_donorgroups}, 
     )
 
+
 def InstitutionPersonListView(request, pk):
     this_institution = Institution.objects.get(pk=pk)
     institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')
@@ -64,17 +64,21 @@ def InstitutionPersonListView(request, pk):
     )
 
 
-# TODO cleanup
 class PersonListView(generic.ListView):
-    paginate_by = 90
-    # model = Person
-    # buggy. produces duplicates
-    # queryset = Person.objects.order_by('-donation__donation_date_start')
-    queryset = Person.objects.order_by('name')
+    paginate_by = 50
+    model = Person
+    def get_queryset(self):
+        # pass this to the url ?orderby=-name    or  num_donations
+        order = self.request.GET.get('orderby', '-num_donations')
+        new_context = Person.objects.annotate(num_donations=Count('donation')).order_by(order)
+        return new_context
+
     def get_context_data(self, **kwargs):
         context = super(PersonListView, self).get_context_data(**kwargs)
         context['num_donors'] = Person.objects.all().count()
+        context['orderby'] = self.request.GET.get('orderby', 'name')
         return context    
+
 
 class PersonDetailView(generic.DetailView):
     model = Person
@@ -89,7 +93,6 @@ class DonorgroupListView(generic.ListView):
 class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
     paginate_by = 30   
-
     # queryset = Donorgroup.objects.order_by('donation__person')
 
 
@@ -145,6 +148,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+
+# TODO remove this 
 import csv
 from itertools import islice
 import codecs
