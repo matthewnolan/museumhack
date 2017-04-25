@@ -5,15 +5,33 @@
     <h1>{{ institution.name }}</h1>
     <p>{{ institution.city }}</p>
   </div>
-<!-- TODO  list newest to oldest. -->
+
   <br>
+  <h4>Top 5 Donors, Based on Repeat Mentions</h4>
   <table class="table table-hover noborder">
+    {% for institution_donor in institution_donors %}
     <tr>
-        <th>Groups who have donated</th>
+        <td><a href="{% url 'person-detail' institution_donor.pk %}">{{institution_donor}} ({{institution_donor.num_donations}})</td>
     </tr>
-    {% for donorgroup in institution.donorgroup_set.all %}
+    {% endfor %}  
+  </table>
+
+  <br>
+  <!-- <h4>Donor Lists</h4> -->
+  <table class="table table-hover noborder">
+    {% for institution_donor_list in institution_donor_lists %}
     <tr>
-        <td><a href="{% url 'donorgroup-detail' donorgroup.pk %}">{{donorgroup.name}}</a></td>
+        <td>{{institution_donor_list.donation_list}}</td>
+    </tr>
+    {% endfor %}  
+  </table>
+
+  <br>
+  <h4>Donor Group and Special Events</h4>
+  <table class="table table-hover noborder">
+    {% for institution_donorgroup in institution_donorgroups %}
+    <tr>
+        <td><a href="{% url 'donorgroup-detail' institution_donorgroup.pk %}">{{institution_donorgroup.name}}</td>
     </tr>
     {% endfor %}  
   </table>

@@ -13,7 +13,7 @@ urlpatterns += [
     url(r'^donorgroup/(?P<pk>\d+)$', views.DonorgroupDetailView.as_view(), name='donorgroup-detail'), 
        
     url(r'^institutions/$', views.InstitutionListView.as_view(), name='institutions'),
-    url(r'^institution/(?P<pk>\d+)$', views.InstitutionDetailView.as_view(), name='institution-detail'),
+    url(r'^institution/(?P<pk>\d+)$', views.InstitutionDetailView, name='institution-detail'),
 ]
 
 urlpatterns += [  

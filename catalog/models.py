@@ -5,6 +5,12 @@ from django.urls import reverse
 from django.utils import timezone
 import uuid 
 
+# Get around encoding problems
+# https://stackoverflow.com/questions/17974412/django-ascii-codec-cant-encode-character
+from django.utils.encoding import python_2_unicode_compatible
+
+
+@python_2_unicode_compatible
 class Person(models.Model):
     name = models.CharField(max_length=300)
 
@@ -98,7 +104,7 @@ class Donation(models.Model):
         elif self.donation_type == "o":
             amount_str = self.amount_other        
         elif self.donation_type == "u":
-            amount_str = "unknown"
+            amount_str = "Unknown"
 
         return amount_str
           
@@ -109,7 +115,6 @@ class Donation(models.Model):
             thisName = "No Name" 
 
         return '%s (%s)' % (thisName,self.institution)
-
 
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
@@ -124,7 +129,6 @@ class Donorgroup(models.Model):
     def __str__(self):
         # String for representing the Model object (in Admin site etc.)
         return self.name
-
 
 class Institution(models.Model):
     name = models.CharField(max_length=100)
