@@ -14,6 +14,8 @@
         <td><a href="{% url 'person-detail' institution_donor.pk %}">{{institution_donor}} ({{institution_donor.num_donations}})</td>
     </tr>
     {% endfor %}  
+
+    {% if institution_donors|length >= 5 %} <tr><td><b><a href="{% url 'institution-donors' institution.pk %}">(See All Donors)</a></b></td></tr>{% endif %}
   </table>
 
   <br>

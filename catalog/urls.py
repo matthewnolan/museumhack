@@ -14,6 +14,7 @@ urlpatterns += [
        
     url(r'^institutions/$', views.InstitutionListView.as_view(), name='institutions'),
     url(r'^institution/(?P<pk>\d+)$', views.InstitutionDetailView, name='institution-detail'),
+    url(r'^institution/(?P<pk>\d+)/donors$', views.InstitutionPersonListView, name='institution-donors'),
 ]
 
 urlpatterns += [  

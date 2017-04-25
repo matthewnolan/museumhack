@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div class="page-header">
+    <h1><a href="{% url 'institution-detail' institution.pk %}">{{ institution.name }}</a></h1>
+    <p>{{ institution.city }}</p>
+  </div>
+
+  <br>
+  <h4>All Donors</h4>
+  <table class="table table-hover noborder">
+    {% for institution_donor in institution_donors %}
+    <tr>
+        <td><a href="{% url 'person-detail' institution_donor.pk %}">{{institution_donor}} ({{institution_donor.num_donations}})</td>
+    </tr>
+    {% endfor %}   
+
+  </table>
+
+{% endblock %}

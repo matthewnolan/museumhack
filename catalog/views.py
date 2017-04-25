@@ -34,15 +34,12 @@ class InstitutionListView(generic.ListView):
         context['num_institutions'] = Institution.objects.all().count()
         return context      
 
-# class InstitutionDetailView(generic.DetailView):
-#     model = Institution
 
 from django.db.models import Count, Max, Min
 
 def InstitutionDetailView(request, pk):
-
     this_institution = Institution.objects.get(pk=pk)
-    institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')[:5]
+    institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')[:6]
     institution_donor_lists = Donation.objects.filter(institution=this_institution).order_by('donation_list').distinct('donation_list')
     institution_donorgroups = Donorgroup.objects.filter(institution=this_institution).order_by('name')
 
@@ -54,6 +51,18 @@ def InstitutionDetailView(request, pk):
          'institution_donor_lists': institution_donor_lists,
          'institution_donorgroups': institution_donorgroups}, 
     )
+
+def InstitutionPersonListView(request, pk):
+    this_institution = Institution.objects.get(pk=pk)
+    institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')
+
+    return render(
+        request,
+        'catalog/institution_donors.html',
+         context={'institution':this_institution, 
+         'institution_donors': institution_donors}, 
+    )
+
 
 # TODO cleanup
 class PersonListView(generic.ListView):
