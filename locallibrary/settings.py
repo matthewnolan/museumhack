@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '5mvt^&o*$h=nck+uu8xztqv0c+5b#a
 DEBUG = True
 # DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = ['museumhack.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
