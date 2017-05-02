@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="page-header">
-		<h1>Museum Donor List<br>
+		<h1>Museum Patrons<br>
 		<small>A project to document all donations made to museums</small>
 		</h1>
 	</div>
@@ -14,7 +14,9 @@
     <li><strong>Donation Groups:</strong> {{ num_donorgroups }}</li>
     <li><strong>Museums &amp; Institutions:</strong> {{ num_institutions }}</li>
   </ul>
+  {% if user.is_staff %}
 	<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+  {% endif %}
 	<br><br>
 
 {% endblock %}

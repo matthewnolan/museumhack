@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  {% block title %}<title>Museum Donor List</title>{% endblock %}
+  {% block title %}<title>Museum Patrons</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'index' %}">Museum Donor List</a>
+      <a class="navbar-brand" href="{% url 'index' %}">Museum Patrons</a>
     </div>
     <div class="navbar-collapse collapse navbar-material-light-blue-collapse">
       <ul class="nav navbar-nav">
@@ -36,6 +36,11 @@
         <li class="{% if request.resolver_match.url_name == 'donorgroups' %}active{% endif %}"><a href="{% url 'donorgroups' %}" %}>Groups</a></li>
         <li class="{% if request.resolver_match.url_name == 'institutions' %}active{% endif %}"><a href="{% url 'institutions' %}" %}>Museums</a></li>
       </ul>
+      <form class="navbar-form navbar-left" id="googleSearch">
+        <div class="form-group">
+          <input type="text" class="form-control col-sm-8" placeholder="Search" id="googleSearchVal">
+        </div>
+      </form>      
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li class="dropdown">
@@ -66,5 +71,15 @@
 </body>
 <script>
   $.material.init()
+
+  $(document).ready(function(){
+
+    $("#googleSearch").submit(function(e) {
+      e.preventDefault();
+      var thisQ = $("#googleSearchVal");
+      window.open('https://cse.google.com/cse/publicurl?cx=017922859051743845662:qqwxxbwmukm&q=' + thisQ.val(), '_blank')
+      thisQ.val('')
+    });    
+  })
 </script>
 </html>
