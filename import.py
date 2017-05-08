@@ -2,7 +2,7 @@
 # execfile('import.py')
 
 # change path depending on what you want to import
-mypath = 'imported_data/001'
+mypath = 'imported_data/002'
 
 
 import os, sys
@@ -107,7 +107,6 @@ def importCsv(whichfile):
 
 
 # importCsv('imported_data/Museum Data Template - 1985-1989 NYC Public Library.csv')
-
 
 
 def query_yes_no(question, default="yes"):

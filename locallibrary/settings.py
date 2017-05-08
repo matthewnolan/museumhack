@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+# if you want sitemap.xml to work, the site with this ID has to be the current domain in django_site in the database.
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,7 +87,7 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'museum_db2',
+        'NAME': 'museum_db5',
         'USER': 'jesus',
         'PASSWORD': 'password123',
         'HOST': '',
