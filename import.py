@@ -2,7 +2,7 @@
 # execfile('import.py')
 
 # change path depending on what you want to import
-mypath = 'imported_data/002'
+mypath = 'imported_data/003'
 
 
 import os, sys
@@ -95,6 +95,9 @@ def importCsv(whichfile):
             institution=i1,
             donorgroup=dg1
         )
+        # d1.save()
+        # break
+
         try:
             d1.save()
             print("Saved:", savedCount)

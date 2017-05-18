@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'museum_db5',
+        'NAME': 'museum_db6',
         'USER': 'jesus',
         'PASSWORD': 'password123',
         'HOST': '',

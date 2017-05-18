@@ -61,7 +61,7 @@ class Donation(models.Model):
         ('u', 'Unknown'),
     )
 
-    donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='u', help_text='Donation Type')
+    donation_type = models.CharField(max_length=1, choices=DONATION_TYPES, default='u', null=True, blank=True, help_text='Donation Type')
 
     amount_exact = models.DecimalField(max_digits=99, decimal_places=2, null=True, blank=True, help_text="For exact values ie: $100")
 
@@ -117,6 +117,7 @@ class Donation(models.Model):
 
         return '%s (%s)' % (thisName,self.institution)
 
+@python_2_unicode_compatible
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
 
@@ -131,6 +132,7 @@ class Donorgroup(models.Model):
         # String for representing the Model object (in Admin site etc.)
         return self.name
 
+@python_2_unicode_compatible
 class Institution(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
