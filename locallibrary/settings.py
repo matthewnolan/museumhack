@@ -26,14 +26,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '5mvt^&o*$h=nck+uu8xztqv0c+5b#a
 
 
 
-ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1', '*', 'localhost']
-DEBUG = False
+ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1',]
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get('DEBUG', True)
 # DEBUG = bool( os.environ.get('DJANGO_DEBUG', False) )
 # DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 # TEMPLATE_DEBUG = DEBUG
+# TODO why do I get a 500 erro 
+DEBUG = True
 
 
 
