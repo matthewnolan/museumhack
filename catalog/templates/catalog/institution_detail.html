@@ -15,7 +15,7 @@
     </tr>
     {% endfor %}  
 
-    {% if institution_donors|length >= 5 %} <tr><td><b><a href="{% url 'institution-donors' institution.pk %}">(See All Donors)</a></b></td></tr>{% endif %}
+    {% if institution_donors|length >= 5 %} <tr><td><b><a href="{% url 'institution-donors' institution.slug %}">(See All Donors)</a></b></td></tr>{% endif %}
   </table>
 
   <br>

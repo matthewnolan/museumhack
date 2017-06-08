@@ -9,6 +9,11 @@ import uuid
 # https://stackoverflow.com/questions/17974412/django-ascii-codec-cant-encode-character
 from django.utils.encoding import python_2_unicode_compatible
 
+# from django_autoslug.fields import AutoSlugField
+# from autoslug.fields import AutoSlugField
+# from django_autoslug.fields import AutoSlugField
+from django.utils.text import slugify
+
 
 @python_2_unicode_compatible
 class Person(models.Model):
@@ -136,13 +141,23 @@ class Donorgroup(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
+    slug = models.SlugField(null=True, default=None, unique=True)
+
+    # def save(self):
+    #     instance = super(AddForm, self).save(commit=False)
+    #     instance.slug = slugify(instance.title)
+    #     instance.save()
+
+    #     return instance    
     
     def get_absolute_url(self):
-        return reverse('institution-detail', args=[str(self.id)])
-    
+        return reverse('institution-detail', args=[str(self.slug)])
+        # return 'c:institution', (self.slug,)
+
     def __str__(self):
         #String for representing the Model object.
         return self.name
+
 
 
 # TODO remove this api demo

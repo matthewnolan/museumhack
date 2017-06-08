@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'import_export',
     'rest_framework',
     'django.contrib.sites',
-    'django.contrib.sitemaps',
+    'django.contrib.sitemaps'
 ]
 
 SITE_ID = 1

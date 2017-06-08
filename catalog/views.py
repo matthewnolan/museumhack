@@ -36,8 +36,8 @@ class InstitutionListView(generic.ListView):
         return context      
 
 
-def InstitutionDetailView(request, pk):
-    this_institution = Institution.objects.get(pk=pk)
+def InstitutionDetailView(request, slug):
+    this_institution = Institution.objects.get(slug=slug)
     institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')[:6]
     institution_donor_lists = Donation.objects.filter(institution=this_institution).order_by('donation_list').distinct('donation_list')
     institution_donorgroups = Donorgroup.objects.filter(institution=this_institution).order_by('name')
@@ -52,8 +52,8 @@ def InstitutionDetailView(request, pk):
     )
 
 
-def InstitutionPersonListView(request, pk):
-    this_institution = Institution.objects.get(pk=pk)
+def InstitutionPersonListView(request, slug):
+    this_institution = Institution.objects.get(slug=slug)
     institution_donors = Person.objects.filter(donation__institution=this_institution).annotate(num_donations=Count('donation')).order_by('-num_donations')
 
     return render(
