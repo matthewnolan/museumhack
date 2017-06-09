@@ -28,7 +28,7 @@
   <tr>
       <td>{{donation.donation_date_start}} {% if donation.donation_date_end %}- <br>{{donation.donation_date_end}} {% endif %}</td>
       <td>{{donation.display_amount}}</td>
-      <td><a href="{% url 'institution-detail' donation.institution.pk %}">{{donation.institution}}</a></td>
+      <td><a href="{% url 'institution-detail' donation.institution.slug %}">{{donation.institution}}</a></td>
       <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
       <td>{{donation.donation_class}}</td>
       <td>{{donation.donation_full_name}}</td>

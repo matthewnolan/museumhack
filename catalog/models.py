@@ -10,9 +10,7 @@ import uuid
 from django.utils.encoding import python_2_unicode_compatible
 
 # from django_autoslug.fields import AutoSlugField
-# from autoslug.fields import AutoSlugField
-# from django_autoslug.fields import AutoSlugField
-from django.utils.text import slugify
+# from django.utils.text import slugify
 
 
 @python_2_unicode_compatible
@@ -122,6 +120,7 @@ class Donation(models.Model):
 
         return '%s (%s)' % (thisName,self.institution)
 
+
 @python_2_unicode_compatible
 class Donorgroup(models.Model):
     name = models.CharField(max_length=200, help_text="Name of the group of donors")
@@ -137,22 +136,17 @@ class Donorgroup(models.Model):
         # String for representing the Model object (in Admin site etc.)
         return self.name
 
+
 @python_2_unicode_compatible
 class Institution(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    slug = models.SlugField(null=True, default=None, unique=True)
-
-    # def save(self):
-    #     instance = super(AddForm, self).save(commit=False)
-    #     instance.slug = slugify(instance.title)
-    #     instance.save()
-
-    #     return instance    
+    slug = models.SlugField(null=True, default=None, unique=True)  
     
+    # TODO make the slug save automatically using AutoSlugField or slugify
+
     def get_absolute_url(self):
         return reverse('institution-detail', args=[str(self.slug)])
-        # return 'c:institution', (self.slug,)
 
     def __str__(self):
         #String for representing the Model object.
