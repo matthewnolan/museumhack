@@ -1,8 +1,9 @@
 from django.conf.urls import url, include
 from . import views
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'), 
+    # url(r'^$', views.index, name='index'), 
 ]
 
 urlpatterns += [
@@ -15,5 +16,7 @@ urlpatterns += [
     url(r'^institutions/$', views.InstitutionListView.as_view(), name='institutions'),
     url(r'^institution/(?P<slug>[-\w]+)/$', views.InstitutionDetailView, name='institution-detail'),
     url(r'^institution/(?P<slug>[-\w]+)/donors/$', views.InstitutionPersonListView, name='institution-donors'),
-]
 
+    # TODO remove this when we want to use the index
+    url(r'^.*$', RedirectView.as_view(url='institution/the-metropolitan-museum-of-art/', permanent=False), name='index')
+]
