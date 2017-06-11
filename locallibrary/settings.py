@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
     'import_export',
-    'rest_framework',
     'django.contrib.sites',
     'django.contrib.sitemaps'
 ]
