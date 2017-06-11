@@ -31,11 +31,11 @@ ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', False)
-# DEBUG = bool(os.environ.get('DJANGO_DEBUG', False) )
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False) )
 # DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 # TODO why do I get a 500 error 
 # DEBUG = os.environ["DJANGO_DEBUG"]
-# DEBUG = False
+DEBUG = False
 # DEBUG = True
 # TEMPLATE_DEBUG = DEBUG
 
