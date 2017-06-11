@@ -142,6 +142,8 @@ class Donorgroup(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
+    image = models.URLField(null=True, default="http://fpoimg.com/100x100")
+    desc = models.TextField(null=True, default=None)
     slug = models.SlugField(null=True, default=None, unique=True)  
     
     # TODO make the slug save automatically using AutoSlugField or slugify
