@@ -52,7 +52,6 @@ sitemaps = {
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^c/', include('catalog.urls')),
     url(r'', include('catalog.urls')),
     url(r'^$', RedirectView.as_view(url='/c/', permanent=True)),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

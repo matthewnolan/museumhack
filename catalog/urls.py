@@ -16,3 +16,4 @@ urlpatterns += [
     url(r'^institution/(?P<slug>[-\w]+)/$', views.InstitutionDetailView, name='institution-detail'),
     url(r'^institution/(?P<slug>[-\w]+)/donors/$', views.InstitutionPersonListView, name='institution-donors'),
 ]
+

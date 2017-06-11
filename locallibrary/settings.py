@@ -25,16 +25,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '5mvt^&o*$h=nck+uu8xztqv0c+5b#ajg85dg%=pnjr130062b')
 
 
+# export DJANGO_DEBUG=False
+ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1']
+# ALLOWED_HOSTS = ['*']
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DJANGO_DEBUG', False)
 # DEBUG = bool( os.environ.get('DJANGO_DEBUG', False) )
 # DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
-# TEMPLATE_DEBUG = DEBUG
-# TODO why do I get a 500 erro 
+# TODO why do I get a 500 error 
 # DEBUG = False
-DEBUG = True
+# DEBUG = True
+# TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['museumpatrons.com', 'museumhack.herokuapp.com', '127.0.0.1',]
+ADMINS = [('Jesus', 'matt@redbutton.io')]
 
 
 # Application definition
@@ -101,15 +104,6 @@ DATABASES = {
 }
 
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -170,4 +164,3 @@ STATIC_URL = '/static/'
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
