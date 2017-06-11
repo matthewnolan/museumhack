@@ -3,6 +3,7 @@
 {% block content %}
   <div class="page-header">
     <h1>{{ person.name }}</h1>
+    <p>{{ person.name }} has made a total of {{person.donation_set.all|length}} donations to museums including the {{person.donation_set.first.institution}} from the "{{person.donation_set.first.donorgroup}}"" group.</p>
   </div>
 
   <p>Member of:</p>
@@ -13,30 +14,33 @@
 
 <br>
 <h4>Donations</h4>
-<table class="table table-hover noborder">
+
+<table class="table table-hover noborder" id="persondetail">
+  <thead>
+    <tr>
+        <th data-sort="int"><span>Date</span></th>
+        <th data-sort="string"><span>Amount</span></th>
+        <th data-sort="string"><span>Museum</span></th>
+        <th data-sort="string"><span>Group</span></th>
+        <th data-sort="string"><span>Donation Class</span></th>
+        <th data-sort="string"><span>Event</span></th>
+        <th data-sort="string"><span>Source</span></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for donation in person.donation_set.all|dictsort:'donation_date_start' %}
   <tr>
-      <th>Date</th>
-      <th>Amount</th>
-      <th>Museum</th>
-      <th>Group</th>
-      <th>Donation Class</th>
-      <th>Donation Full Name</th>
-      <th>Event</th>
-      <th>Source</th>
-  </tr>
-  {% for donation in person.donation_set.all %}
-  <tr>
-      <td>{{donation.donation_date_start}} {% if donation.donation_date_end %}- <br>{{donation.donation_date_end}} {% endif %}</td>
+      <td data-sort-value='{{donation.donation_date_start | date:"U"}}'>{{donation.donation_date_start | date:"m/d/y"}} {% if donation.donation_date_end %}- <br>{{donation.donation_date_end  | date:"m/d/y"}} {% endif %}</td>
       <td>{{donation.display_amount}}</td>
       <td><a href="{% url 'institution-detail' donation.institution.slug %}">{{donation.institution}}</a></td>
       <td><a href="{% url 'donorgroup-detail' donation.donorgroup.pk %}">{{donation.donorgroup}}</a> </td>
       <td>{{donation.donation_class}}</td>
-      <td>{{donation.donation_full_name}}</td>
       <td>{{donation.event_name}}</td>
       <td><a href="{{donation.data_source_url}}" target="_blank">{{donation.data_source_name}}</a></td>
   </tr>
-  {% endfor %}  
+  {% endfor %}
+  </tbody> 
 </table>
-  
+
 
 {% endblock %}

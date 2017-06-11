@@ -11,3 +11,22 @@
 .noborder * {
 	border-top:0px !important;
 }
+
+#persondetail th span {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.page-header .header-thumb img {
+	margin-right: 10px;
+	width:100px;
+	height:100px;
+}
+.page-header span {
+	display: inline-block;
+	vertical-align: middle;
+}

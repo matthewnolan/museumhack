@@ -93,3 +93,4 @@ class DonorgroupDetailView(generic.DetailView):
     model = Donorgroup
     paginate_by = 30   
     # queryset = Donorgroup.objects.order_by('donation__person')
+
