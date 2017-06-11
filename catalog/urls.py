@@ -17,50 +17,6 @@ urlpatterns += [
     url(r'^institution/(?P<slug>[-\w]+)/donors/$', views.InstitutionPersonListView, name='institution-donors'),
 ]
 
-urlpatterns += [  
-    url(r'^institution/create/$', views.InstitutionCreate.as_view(), name='institution_create'),
-    url(r'^institution/(?P<pk>\d+)/update/$', views.InstitutionUpdate.as_view(), name='institution_update'),
-    url(r'^institution/(?P<pk>\d+)/delete/$', views.InstitutionDelete.as_view(), name='author_delete'),
-]
-
-
-
-
-
-
-# http://www.django-rest-framework.org/tutorial/2-requests-and-responses/
-
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-
-from rest_framework.urlpatterns import format_suffix_patterns
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
-
-urlpatterns += [
-    # url(r'^', include(router.urls)),
-    url(r'^snippets/$', views.SnippetList.as_view()),
-    url(r'^uploadcsv/upload/$', views.CsvLoad.as_view()),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view()),
-]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
-
-urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-]
+## TODO do I need this?
+# from rest_framework.urlpatterns import format_suffix_patterns
+# urlpatterns = format_suffix_patterns(urlpatterns)
