@@ -39,6 +39,7 @@
         <li class="{% if request.resolver_match.url_name == 'persons' %}active{% endif %}"><a href="{% url 'persons' %}" %}>Donors</a></li>
         <li class="{% if request.resolver_match.url_name == 'donorgroups' %}active{% endif %}"><a href="{% url 'donorgroups' %}" %}>Groups</a></li>
         <li class="{% if request.resolver_match.url_name == 'institutions' %}active{% endif %}"><a href="{% url 'institutions' %}" %}>Museums</a></li>
+        <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}"><a href="{% url 'about' %}" %}>About</a></li>
       </ul>
       <form class="navbar-form navbar-left" id="googleSearch">
         <div class="form-group">

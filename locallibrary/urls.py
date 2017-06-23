@@ -56,6 +56,8 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/c/', permanent=True)),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /admin", content_type='text/plain')),
+    # url(r'^about/', include('django.contrib.flatpages.urls')),
+    
 ]
 
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
