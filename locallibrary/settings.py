@@ -36,7 +36,7 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', False) )
 # TODO why do I get a 500 error 
 # DEBUG = os.environ["DJANGO_DEBUG"]
 # DEBUG = False
-DEBUG = True
+# DEBUG = True
 # TEMPLATE_DEBUG = DEBUG
 
 # print os.environ["DJANGO_DEBUG"]
