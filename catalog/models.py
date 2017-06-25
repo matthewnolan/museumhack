@@ -103,7 +103,8 @@ class Donation(models.Model):
         if self.donation_type == "e":  
             amount_str = "%s" % ('${:,.2f}'.format(self.amount_exact).rstrip('0').rstrip('.'))        
         elif self.donation_type == "r":
-            amount_str = "%s - %s" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'), '${:,.2f}'.format(self.amount_range_high).rstrip('0').rstrip('.'))
+            amount_str = "%s - %s" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'), self.amount_range_high)
+            # amount_str = "%s - %s" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'), '${:,.2f}'.format(self.amount_range_high).rstrip('0').rstrip('.'))
         elif self.donation_type == "p":
             amount_str = "%s and above" % ('${:,.2f}'.format(self.amount_range_low).rstrip('0').rstrip('.'))
         elif self.donation_type == "o":

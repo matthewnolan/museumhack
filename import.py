@@ -2,11 +2,10 @@
 # execfile('import.py')
 
 # change path depending on what you want to import
-mypath = 'imported_data/003'
+mypath = 'imported_data/004'
 
 
-import os, sys
-import glob
+import os, sys, glob
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "catalog.settings")
 
